@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.util.*
+import androidx.compose.material.icons.outlined.FavoriteBorder
 
 class MainActivity : ComponentActivity() {
 
@@ -233,13 +234,13 @@ fun LoginScreen(
 
                         } else {
 
-                            onLogin(username, password)
-
                             Toast.makeText(
                                 context,
-                                "Login Successful",
+                                "Login Successful ✅",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            onLogin(username, password)
                         }
                     },
 
@@ -575,6 +576,7 @@ fun HomeScreen(
             "Maths",
             "Position of a point on a graph."
         ),
+
 
         // ---------------- SCIENCE ----------------
 
@@ -1248,9 +1250,9 @@ fun HomeScreen(
 
                                     IconButton(
                                         onClick = {
-
+                                            tts.language = Locale.US
                                             tts.speak(
-                                                word.pronunciation,
+                                                word.english,
                                                 TextToSpeech.QUEUE_FLUSH,
                                                 null,
                                                 null
@@ -1273,7 +1275,17 @@ fun HomeScreen(
 
                                                 Toast.makeText(
                                                     context,
-                                                    "Saved Successfully",
+                                                    "Saved Successfully ❤️",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                            } else {
+
+                                                savedWords.remove(word)
+
+                                                Toast.makeText(
+                                                    context,
+                                                    "Removed from Saved",
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
@@ -1281,8 +1293,14 @@ fun HomeScreen(
                                     ) {
 
                                         Icon(
-                                            Icons.Default.Favorite,
-                                            null,
+                                            imageVector =
+                                                if (savedWords.contains(word))
+                                                    Icons.Filled.Favorite
+                                                else
+                                                    Icons.Outlined.FavoriteBorder,
+
+                                            contentDescription = null,
+
                                             tint = Color.Red
                                         )
                                     }
